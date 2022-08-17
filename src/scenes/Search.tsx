@@ -1,8 +1,8 @@
 import { Button, TextField } from "@mui/material";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { URI, URL_TOKEN } from "../constants/api";
-import { ErrorDiv, Form, SearchContainer } from "../styles/searchStyles";
-import { PosterList } from "./Poster";
+import { Body, ErrorDiv, Form, SearchContainer } from "../styles/searchStyles";
+import { PosterList } from "../components/Poster";
 
 interface IMoveResult {
   Poster: string;
@@ -46,16 +46,18 @@ export const Search = () => {
   }, [initialSearchComplete, textRef]);
 
   return (
-    <SearchContainer>
-      <ErrorDiv>{error}</ErrorDiv>
-      <Form onSubmit={(e) => handleSearch(e)}>
-        <TextField inputRef={textRef} placeholder="Search a movie title..." />
-        <Button onClick={(e) => handleSearch(e)} variant="contained">
-          Search
-        </Button>
+    <Body>
+      <SearchContainer>
+        <ErrorDiv>{error}</ErrorDiv>
+        <Form onSubmit={(e) => handleSearch(e)}>
+          <TextField inputRef={textRef} placeholder="Search a movie title..." />
+          <Button onClick={(e) => handleSearch(e)} variant="contained">
+            Search
+          </Button>
 
-        <PosterList posters={posterList} />
-      </Form>
-    </SearchContainer>
+          <PosterList posters={posterList} />
+        </Form>
+      </SearchContainer>
+    </Body>
   );
 };

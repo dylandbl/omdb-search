@@ -1,6 +1,15 @@
 import styled from "@emotion/styled";
 import { Button } from "@mui/material";
 
+export const Body = styled.div`
+  width: 100%;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const SearchContainer = styled.div``;
 
 export const ErrorDiv = styled.div`

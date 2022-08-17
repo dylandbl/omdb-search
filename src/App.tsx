@@ -1,9 +1,9 @@
-import { MainPage } from "./scenes/MainPage";
+import { Search } from "./scenes/Search";
 
 function App() {
   return (
     <div className="App">
-      <MainPage />
+      <Search />
     </div>
   );
 }
