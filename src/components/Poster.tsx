@@ -1,3 +1,4 @@
+import { IMovieResult } from "../scenes/Search";
 import {
   PosterImage,
   PosterListContainer,
@@ -6,7 +7,7 @@ import {
 } from "../styles/posterStyles";
 
 interface PosterListProps {
-  posters: any[];
+  posters: IMovieResult[];
 }
 
 interface PosterProps {
@@ -39,7 +40,7 @@ export const PosterList = (props: PosterListProps) => {
     <PosterListContainer>
       {posters.map((movie, index) => (
         <Poster
-          key={index + "-" + movie.id}
+          key={index + "-" + movie.imdbID}
           title={movie.Title}
           posterPath={movie.Poster}
           release={movie.Year}
