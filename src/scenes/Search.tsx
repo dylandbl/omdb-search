@@ -1,11 +1,12 @@
 import { Button, TextField } from "@mui/material";
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 import { URI, URL_TOKEN } from "../constants/api";
 import { Body, ErrorDiv, Form, SearchContainer } from "../styles/searchStyles";
 import { PosterList } from "../components/Poster";
 
-interface IMoveResult {
+export interface IMovieResult {
   Poster: string;
+  Title: string;
   Type: string;
   Year: string;
   imdbID: string;
@@ -13,8 +14,7 @@ interface IMoveResult {
 
 export const Search = () => {
   const textRef = useRef<HTMLInputElement>(null);
-  const [posterList, setPosterList] = useState<IMoveResult[]>([]);
-  const [initialSearchComplete, setInitialSearchComplete] = useState(false);
+  const [posterList, setPosterList] = useState<IMovieResult[]>([]);
   const [error, setError] = useState("");
 
   const handleSearch = async (e: FormEvent) => {
@@ -28,22 +28,13 @@ export const Search = () => {
       .then((res) => res.json())
       .then((data) => data);
 
-    console.log(result);
-
     if (result.Response === "True") {
       setError("");
       setPosterList(result.Search);
-      setInitialSearchComplete(true);
     } else {
       setError(result.Error);
     }
   };
-
-  useEffect(() => {
-    if (initialSearchComplete) {
-      console.log(textRef.current);
-    }
-  }, [initialSearchComplete, textRef]);
 
   return (
     <Body>
