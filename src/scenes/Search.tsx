@@ -1,5 +1,5 @@
-import { Button, TextField } from "@mui/material";
-import { FormEvent, useRef, useState } from "react";
+import { TextField } from "@mui/material";
+import { useCallback, useEffect, useState } from "react";
 import { URI, URL_TOKEN } from "../constants/api";
 import { Body, ErrorDiv, Form, SearchContainer } from "../styles/searchStyles";
 import { PosterList } from "../components/Poster";
@@ -13,16 +13,19 @@ export interface IMovieResult {
 }
 
 export const Search = () => {
-  const textRef = useRef<HTMLInputElement>(null);
+  const [searchQuery, setSearchQuery] = useState("");
   const [posterList, setPosterList] = useState<IMovieResult[]>([]);
   const [error, setError] = useState("");
 
-  const handleSearch = async (e: FormEvent) => {
-    e.preventDefault();
-    const query = textRef.current?.value.trim();
-    if (query === "") return;
-    const queryUrl = `${URI}?s=${query}&type=movie${URL_TOKEN}`;
+  const handleSearch = useCallback(async () => {
+    if (searchQuery === "") {
+      setError("");
+      setPosterList([]);
+      return;
+    }
 
+    const trimmedQuery = searchQuery.trim();
+    const queryUrl = `${URI}?s=${trimmedQuery}&type=movie${URL_TOKEN}`;
     // Returns results from page one by default. One page includes 10 items.
     const result = await fetch(queryUrl)
       .then((res) => res.json())
@@ -34,18 +37,21 @@ export const Search = () => {
     } else {
       setError(result.Error);
     }
-  };
+  }, [searchQuery]);
+
+  useEffect(() => {
+    handleSearch();
+  }, [handleSearch]);
 
   return (
     <Body>
       <SearchContainer>
         <ErrorDiv>{error}</ErrorDiv>
-        <Form onSubmit={(e) => handleSearch(e)}>
-          <TextField inputRef={textRef} placeholder="Search a movie title..." />
-          <Button onClick={(e) => handleSearch(e)} variant="contained">
-            Search
-          </Button>
-
+        <Form>
+          <TextField
+            onChange={(e) => setSearchQuery(e.target.value.trim())}
+            placeholder="Search a movie title..."
+          />
           <PosterList posters={posterList} />
         </Form>
       </SearchContainer>

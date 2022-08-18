@@ -20,7 +20,7 @@ export const ErrorDiv = styled.div`
   font-weight: 500;
 `;
 
-export const Form = styled.form`
+export const Form = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
