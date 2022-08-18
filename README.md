@@ -1,3 +1,5 @@
+Visit the demo at https://dylandbl.github.io/omdb-search/
+
 ### `yarn start`
 
 Runs the app in the development mode.\
